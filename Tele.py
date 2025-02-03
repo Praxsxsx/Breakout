@@ -9,17 +9,17 @@ from dotenv import load_dotenv
 from datetime import datetime, timezone
 
 load_dotenv()
-TELEGRAM_TOKEN = os.getenv("7972074486:AAEOCxEvvVNpLIZAEnMougj4tAQl6Eh-6Wo")
-GEMINI_API_KEY = os.getenv("AIzaSyApOwzGaK53FPS76ejuim2ID_vkHJEhwb4")
-MONGO_URI = os.getenv("mongodb://localhost:27017/")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+MONGO_URI = os.getenv("MONGO_URI")
 
-mongo_client = pymongo.MongoClient('mongodb://localhost:27017/')
+mongo_client = pymongo.MongoClient('MONGO_URI')
 db = mongo_client["TheChatsAndUsers"]
 users_collection = db["users"]
 chats_collection = db["chats"]
 
 
-genai.configure(api_key='AIzaSyApOwzGaK53FPS76ejuim2ID_vkHJEhwb4')
+genai.configure(api_key='GEMINI_API_KEY')
 
 
 generation_config = {
@@ -108,7 +108,7 @@ async def start(update: Update, context):
     await update.message.reply_text("Hallo Hallo! I'm Goku 😁! Ask me anything, but food comes first! 😋")
 
 def main():
-    application = Application.builder().token('7972074486:AAEOCxEvvVNpLIZAEnMougj4tAQl6Eh-6Wo').build()
+    application = Application.builder().token('TELEGRAM_TOKEN').build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
